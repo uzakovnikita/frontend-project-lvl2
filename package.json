@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -18,13 +19,24 @@
   "homepage": "https://github.com/uzakovnikita/frontend-project-lvl2#readme",
   "type": "module",
   "devDependencies": {
-    "eslint": "^6.8.0"
-  },
-  "dependencies": {
-    "commander": "^4.1.1",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-node": "0.0.1-security",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0"
   },
+  "dependencies": {
+    "commander": "^4.1.1"
+  },
   "bin": {
-    "gendiff": "bin/gendiff.js"
-  }
+    "gendiff": "dist/bin/gendiff.js"
+  },
+  "files": [
+    "dist"
+  ]
 }
