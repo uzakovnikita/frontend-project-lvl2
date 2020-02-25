@@ -6,8 +6,10 @@ program
     .option('-f, --format [type]', 'output format')
     .arguments('<firstConfig> <secondConfig>')
     .action(
-        // eslint-disable-next-line no-undef
-        diff(firstConfig, secondConfig)
+        function (firstConfig, secondConfig) {
+            const result = diff(firstConfig, secondConfig);
+            result.map(iter => console.log(iter));
+        }
     )
     .description('Compares two configuration files and shows a difference.')
 // eslint-disable-next-line no-undef

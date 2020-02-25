@@ -15,5 +15,7 @@ export default (firstConfig, secondConfig) => {
            return JSON.parse(data);
         }
     })
+    for (const iter of firstData)
+    return [firstData, secondData];
 
 }
