@@ -2,9 +2,9 @@
   "name": "frontend-project-lvl2",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/src/index.js",
   "scripts": {
-    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "build": "cross-env NODE_ENV=production babel src --out-dir dist --source-maps inline",
     "prepublishOnly": "npm run build"
   },
   "repository": {
@@ -17,7 +17,6 @@
     "url": "https://github.com/uzakovnikita/frontend-project-lvl2/issues"
   },
   "homepage": "https://github.com/uzakovnikita/frontend-project-lvl2#readme",
-  "type": "module",
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.4",
@@ -27,6 +26,7 @@
     "babel-core": "^6.26.3",
     "babel-node": "0.0.1-security",
     "babel-preset-env": "^1.7.0",
+    "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0"
   },
