@@ -8,6 +8,7 @@ program
     .action(
         function (firstConfig, secondConfig) {
             const result = genDiff(firstConfig, secondConfig);
+            console.log(result)
             return result;
         }
     )
