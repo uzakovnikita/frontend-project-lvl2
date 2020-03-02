@@ -1,10 +1,11 @@
-import genDiff from '../src/';
-import {dirname} from 'path';
+import { dirname } from 'path';
+import genDiff from '../src';
+
 test('gendiff', () => {
-    const currentDirectory = dirname;
-    const firstConfig = currentDirector.concat('fixtures/before.json');
-    const secondConfig = currentDirectory.concat('fixtures/after.json');
-    const equal = `{
+  const currentDirectory = dirname;
+  const firstConfig = currentDirectory.concat('fixtures/before.json');
+  const secondConfig = currentDirectory.concat('fixtures/after.json');
+  const equal = `{
         host: hexlet.io
       + timeout: 20
       - timeout: 50
@@ -12,5 +13,5 @@ test('gendiff', () => {
       + verbose: true
       - follow: false 
     }`;
-    expect(genDiff(firstConfig, secondConfig)).toEqual(equal);
-})
+  expect(genDiff(firstConfig, secondConfig)).toEqual(equal);
+});
