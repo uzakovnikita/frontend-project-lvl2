@@ -12,7 +12,7 @@ const convertObjectToSring = (obj) => {
     const keys = Object.keys(obj);
     const list = keys.reduce((acc, key) => {
         if (isObject(obj, key)) {
-            acc = [...acc, `${key}: ${(convertObjectToSring(obj[key]))}`];
+            acc = [...acc, `${space(key)}: ${(convertObjectToSring(obj[key]))}`];
             return acc;
         }
         return acc = [...acc, `${space(key)}: ${(obj[key])}`];

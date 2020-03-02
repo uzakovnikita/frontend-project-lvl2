@@ -7,3 +7,5 @@ start:
 
 publish:
 	npm publish --dry-run
+lint:
+	eslint ./src

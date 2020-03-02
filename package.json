@@ -5,7 +5,8 @@
   "main": "dist/src/index.js",
   "scripts": {
     "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -19,16 +20,18 @@
   "homepage": "https://github.com/uzakovnikita/frontend-project-lvl2#readme",
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.4",
+    "@babel/core": "^7.8.6",
     "@babel/node": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-env": "^7.8.6",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-jest": "^25.1.0",
     "babel-node": "0.0.1-security",
     "babel-preset-env": "^1.7.0",
     "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.0.0"
+    "eslint-config-airbnb-base": "^14.0.0",
+    "jest": "^25.1.0"
   },
   "dependencies": {
     "commander": "^4.1.1"
