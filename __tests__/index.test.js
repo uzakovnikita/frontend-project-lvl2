@@ -1,7 +1,9 @@
 import genDiff from '../src/';
+import {dirname} from 'path';
 test('gendiff', () => {
-    const firstConfig = '__tests__/fixtures/before.JSON';
-    const secondConfig = '__tests__/fixtures/after.JSON';
+    const currentDirectory = dirname;
+    const firstConfig = currentDirector.concat('fixtures/before.json');
+    const secondConfig = currentDirectory.concat('fixtures/after.json');
     const equal = `{
         host: hexlet.io
       + timeout: 20
