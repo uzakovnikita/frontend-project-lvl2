@@ -1,17 +1,15 @@
-import { dirname } from 'path';
-import genDiff from '../src';
+import { readFileSync } from 'fs';
+import { diff, convertObjectTostring } from '../src';
+import { resolve } from 'path';
 
-test('gendiff', () => {
-  const currentDirectory = dirname;
-  const firstConfig = currentDirectory.concat('fixtures/before.json');
-  const secondConfig = currentDirectory.concat('fixtures/after.json');
-  const equal = `{
-        host: hexlet.io
-      + timeout: 20
-      - timeout: 50
-      - proxy: 123.234.53.22
-      + verbose: true
-      - follow: false 
-    }`;
-  expect(genDiff(firstConfig, secondConfig)).toEqual(equal);
+test('diff', () => {
+  const currentDirectory = __dirname;
+  const firstConfig = resolve(currentDirectory, './fixtures/before.json');
+  const secondConfig = resolve(currentDirectory, './fixtures/after.json');
+  const equalConfig = resolve(currentDirectory, './fixtures/equal.json');
+  const equal = JSON.parse((readFileSync(equalConfig)));
+  expect(diff(firstConfig, secondConfig)).toEqual(equal);
 });
+test('convertTostring', () => {
+
+})
