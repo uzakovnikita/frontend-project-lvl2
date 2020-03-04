@@ -1,12 +1,15 @@
 import { readFileSync } from 'fs';
-import { resolve } from 'path';
+import { join } from 'path';
 import genDiff from '../src';
 
+const getFixturePath = (filename) => join(__dirname, '.', '__fixtures__', filename);
+const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
+
 test('diff', () => {
-  const firstConfig = resolve(__dirname, './fixtures/before.json');
-  const secondConfig = resolve(__dirname, './fixtures/after.json');
-  const equalConfig = resolve(__dirname, './fixtures/equal.json');
-  const equal = JSON.stringify(JSON.parse((readFileSync(equalConfig))), null, 2).replace(/["']/g, '');
+  console.log(__dirname);
+  const firstConfig = getFixturePath('before.json');
+  const secondConfig = getFixturePath('after.json');
+  const equal = readFile('equal.json').replace(/["']/g, '');
   const result = genDiff(firstConfig, secondConfig);
   expect(result).toBe(equal);
 });
