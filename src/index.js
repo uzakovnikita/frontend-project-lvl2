@@ -5,27 +5,16 @@ import { resolve } from 'path';
 
 const plus = (key) => `+ ${key}`;
 const minus = (key) => `- ${key}`;
-const space = (key) => `  ${key}`;
 const isObject = (obj, key) => Object.prototype.toString.call(obj[key]) === '[object Object]';
 
-export const convertObjectToSring = (obj) => {
-  const keys = Object.keys(obj);
-  const list = keys.reduce((acc, key) => {
-    if (isObject(obj, key)) {
-      return [...acc, `${space(key)}: ${(convertObjectToSring(obj[key]))}`];
-    }
-    return [...acc, `${space(key)}: ${(obj[key])}`];
-  }, []);
-  const result = `\n${list.join('\n')} \n`;
+const convertObjectToSring = (obj) => {
+  const indentation = 2;
+  const str = JSON.stringify(obj, null, indentation);
+  const result = str.replace(/["']/g, '');
   return result;
 };
 
-export const diff = (firstConfig, secondConfig) => {
-  const currentDirectory = cwd();
-  const firstSource = resolve(currentDirectory, firstConfig);
-  const secondSource = resolve(currentDirectory, secondConfig);
-  const firstData = JSON.parse(readFileSync(firstSource));
-  const secondData = JSON.parse(readFileSync(secondSource));
+const diff = (firstData, secondData) => {
   if (isEqual(firstData, secondData)) {
     return firstData;
   }
@@ -39,7 +28,7 @@ export const diff = (firstConfig, secondConfig) => {
     if (isEqual(secondData[key], firstData[key])) {
       difference[key] = firstData[key];
     } else if (isObject(firstData, key)) {
-      difference = { ...difference, [space(key)]: diff(firstData[key], secondData[key]) };
+      difference = { ...difference, [(key)]: diff(firstData[key], secondData[key]) };
     } else {
       difference[plus(key)] = secondData[key];
       difference[minus(key)] = firstData[key];
@@ -59,12 +48,12 @@ export const diff = (firstConfig, secondConfig) => {
 };
 
 export default (firstConfig, secondConfig) => {
-  // const currentDirectory = cwd();
-  // const firstSource = resolve(currentDirectory, firstConfig);
-  // const secondSource = resolve(currentDirectory, secondConfig);
-  // const firstData = JSON.parse(readFileSync(firstSource));
-  // const secondData = JSON.parse(readFileSync(secondSource));
-  const result = `{\n${convertObjectToSring(diff(firstData, secondData))}\n}`;
-  // const result = diff(firstData, secondData);
+  const currentDirectory = cwd();
+  const firstSource = resolve(currentDirectory, firstConfig);
+  const secondSource = resolve(currentDirectory, secondConfig);
+  const firstData = JSON.parse(readFileSync(firstSource));
+  const secondData = JSON.parse(readFileSync(secondSource));
+  const difference = diff(firstData, secondData);
+  const result = convertObjectToSring(difference);
   return result;
 };
