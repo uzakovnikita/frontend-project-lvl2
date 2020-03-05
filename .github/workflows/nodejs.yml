@@ -17,8 +17,24 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install
-    - run: npm run build --if-present
-    - run: npm test
+    - run: npm install -g yarn
+    - run: yarn install
+    - run: yarn build
+    - run: yarn test
+coverage:
+    needs: [ test ]
+    name: coverage
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: '12'
+    - run: npm install -g yarn
+    - run: yarn install
+    - run: yarn build
+    - uses: paambaati/codeclimate-action@v2.2.4
       env:
-        CI: true
+        CC_TEST_REPORTER_ID: 8cfa4e172da23c1ac6bae715e34b24e95c272db3f9618a7844bfcc7b3babbd92
+      with:
+        coverageCommand: yarn coverag
