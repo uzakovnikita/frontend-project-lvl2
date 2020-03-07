@@ -11,7 +11,7 @@ const isObject = (obj, key) => Object.prototype.toString.call(obj[key]) === '[ob
 const convertObjectToSring = (obj) => {
   const indentation = 2;
   const str = JSON.stringify(obj, null, indentation);
-  const result = str.replace(/["']/g, '');
+  const result = str.replace(/["',]/g, '');
   return result;
 };
 

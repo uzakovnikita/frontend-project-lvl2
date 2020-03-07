@@ -8,14 +8,14 @@ const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
 test('diffJSON', () => {
   const firstConfig = getFixturePath('before.json');
   const secondConfig = getFixturePath('after.json');
-  const equal = readFile('equal.json').replace(/["']/g, '');
+  const equal = readFile('equal');
   const result = genDiff(firstConfig, secondConfig);
   expect(result).toBe(equal);
 });
 test('diffYAML', () => {
   const firstConfig = getFixturePath('before.yml');
   const secondConfig = getFixturePath('after.yml');
-  const equal = readFile('equal.yml');
+  const equal = readFile('equal');
   const result = genDiff(firstConfig, secondConfig);
   expect(result).toBe(equal);
 });

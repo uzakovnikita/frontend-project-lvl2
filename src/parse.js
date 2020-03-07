@@ -4,7 +4,7 @@ import { readFileSync } from 'fs';
 import { safeLoad } from 'js-yaml';
 
 const YMLparse = (firstSource) => {
-  const firstData = safeLoad(firstSource);
+  const firstData = safeLoad(readFileSync(firstSource));
   return firstData;
 };
 

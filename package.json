@@ -25,7 +25,8 @@
     "lodash": "^4.17.15"
   },
   "bin": {
-    "gendiff": "dist/bin/gendiff.js"
+    "gendiff": "dist/bin/gendiff.js",
+    "a": "dist/a.js"
   },
   "files": [
     "dist"
