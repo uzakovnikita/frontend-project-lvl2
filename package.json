@@ -7,7 +7,7 @@
     "babel-node": "babel-node",
     "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
     "prepublishOnly": "npm run build",
-    "test": "jest --watch"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -19,25 +19,6 @@
     "url": "https://github.com/uzakovnikita/frontend-project-lvl2/issues"
   },
   "homepage": "https://github.com/uzakovnikita/frontend-project-lvl2#readme",
-  "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
-    "@babel/node": "^7.8.4",
-    "@babel/preset-env": "^7.8.6",
-    "babel-cli": "^7.0.0-beta.3",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "^25.1.0",
-    "babel-node": "0.0.1-security",
-    "babel-preset-env": "^1.7.0",
-    "cross-env": "^7.0.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-babel": "^5.3.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jest": "^23.8.1",
-    "jest": "^25.1.0"
-  },
   "dependencies": {
     "commander": "^4.1.1",
     "lodash": "^4.17.15"
@@ -47,5 +28,21 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^25.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jest": "^23.8.2",
+    "jest": "^25.1.0",
+    "jest-cli": "^25.1.0"
+  }
 }
