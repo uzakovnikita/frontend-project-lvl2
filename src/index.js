@@ -1,7 +1,8 @@
 import { has, isEqual } from 'lodash';
-import { readFileSync } from 'fs';
-import { cwd } from 'process';
-import { resolve } from 'path';
+// import { readFileSync } from 'fs';
+// import { cwd } from 'process';
+// import { resolve } from 'path';
+import parse from './parse';
 
 const plus = (key) => `+ ${key}`;
 const minus = (key) => `- ${key}`;
@@ -48,11 +49,8 @@ const diff = (firstData, secondData) => {
 };
 
 export default (firstConfig, secondConfig) => {
-  const currentDirectory = cwd();
-  const firstSource = resolve(currentDirectory, firstConfig);
-  const secondSource = resolve(currentDirectory, secondConfig);
-  const firstData = JSON.parse(readFileSync(firstSource));
-  const secondData = JSON.parse(readFileSync(secondSource));
+  const firstData = parse(firstConfig);
+  const secondData = parse(secondConfig);
   const difference = diff(firstData, secondData);
   const result = convertObjectToSring(difference);
   return result;
