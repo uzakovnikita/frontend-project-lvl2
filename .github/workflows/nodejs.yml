@@ -9,4 +9,16 @@ jobs:
     steps:
       - name: Print hello message
         run:  echo 'hello world'
-        
+  my_testing:    
+    runs-on: [ubuntu-latest]
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x] 
+    steps:
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.5.4
+        env:
+          CC_TEST_REPORTER_ID: <code_climate_reporter_id>
+        with:
+          coverageCommand: npm run coverage
+          debug: true 
