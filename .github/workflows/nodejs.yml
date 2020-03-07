@@ -1,7 +1,10 @@
 name: Node CI
 
 on:
-  - push
+  push:
+    paths:
+    - 'dist/**'
+    
 
 jobs:
   build:
