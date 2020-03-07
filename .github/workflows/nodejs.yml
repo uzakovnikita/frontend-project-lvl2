@@ -22,6 +22,7 @@ jobs:
         run: |
           make install
           make build
+          npm link
         env:
           CI: true
       - name: linter
