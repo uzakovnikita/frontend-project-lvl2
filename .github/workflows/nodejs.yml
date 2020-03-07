@@ -2,7 +2,8 @@ name: Node CI
 
 on:
   push:
-    
+    branches:    
+      - master   
     paths:
     - 'dist/**'
     
