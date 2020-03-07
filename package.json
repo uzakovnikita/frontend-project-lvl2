@@ -20,11 +20,11 @@
   "homepage": "https://github.com/uzakovnikita/frontend-project-lvl2#readme",
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.6",
+    "@babel/core": "^7.8.7",
     "@babel/node": "^7.8.4",
     "@babel/preset-env": "^7.8.6",
     "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.1.0",
     "babel-node": "0.0.1-security",
