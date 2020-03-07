@@ -1,11 +1,6 @@
 name: Node.js CI
 
 on: [push]
-paths:
-      - src/*
-      - test/*
-      - '*.json'
-      - yarn.lock
 jobs:
   build:
 
@@ -25,20 +20,8 @@ jobs:
     - run: yarn install
     - run: yarn build
     - run: yarn test
-coverage:
-    needs: [ test ]
-    name: coverage
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - uses: actions/setup-node@master
+    - name: Code Climate Coverage Action
+      uses: paambaati/codeclimate-action@v2.5.4
       with:
-        node-version: '12'
-    - run: npm install -g yarn
-    - run: yarn install
-    - run: yarn build
-    - uses: paambaati/codeclimate-action@v2.2.4
-      env:
-        CC_TEST_REPORTER_ID: 8cfa4e172da23c1ac6bae715e34b24e95c272db3f9618a7844bfcc7b3babbd92
-      with:
-        coverageCommand: yarn coverag
+       coverageCommand: yarn coverage
+      # Enable debugging logs for the Code Climate test reporter
