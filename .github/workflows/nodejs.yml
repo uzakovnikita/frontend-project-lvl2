@@ -2,6 +2,7 @@ name: Node CI
 
 on:
   push:
+    
     paths:
     - 'dist/**'
     
@@ -17,6 +18,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: linter
+        run: make lint
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.4.0
+        env:
+          CC_TEST_REPORTER_ID: 8cfa4e172da23c1ac6bae715e34b24e95c272db3f9618a7844bfcc7b3babbd92
+        with:
+          coverageCommand: make test-coverage
+          debug: true
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -28,12 +38,4 @@ jobs:
           npm link
         env:
           CI: true
-      - name: linter
-        run: make lint
-      - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v2.4.0
-        env:
-          CC_TEST_REPORTER_ID: 8cfa4e172da23c1ac6bae715e34b24e95c272db3f9618a7844bfcc7b3babbd92
-        with:
-          coverageCommand: make test-coverage
-          debug: true
+      
