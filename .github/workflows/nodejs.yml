@@ -17,7 +17,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
-    - run: make publish
+    - run: npm run build
     - run: make lint
     - name: Test & publish code coverage
       uses: paambaati/codeclimate-action@v2.4.0
