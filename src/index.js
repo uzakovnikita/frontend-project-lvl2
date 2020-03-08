@@ -2,47 +2,60 @@ import { has, isEqual } from 'lodash';
 import parse from './parse';
 
 const space = (key, counter) => `${'  '.repeat(counter)}${key}`;
-const plus = (key) => `+ ${key}`;
-const minus = (key) => `- ${key}`;
+// const after = (key) => `after ${key}`;
+// const before = (key) => `before ${key}`;
+// const notDiff = (key) => `equal ${key}`;
+const after = (key) => `+ ${key}`;
+const before = (key) => `- ${key}`;
+const notDiff = (key) => `${key}`;
 const isObject = (obj, key) => Object.prototype.toString.call(obj[key]) === '[object Object]';
-
 const render = (obj) => {
-  const indentation = 2;
-  const str = JSON.stringify(obj, null, indentation);
-  const result = str.replace(/["',]/g, '');
-  return result;
+  const str1 = JSON.stringify(obj, null, 2).replace(/['",]/g, '');
+  const arr1 = str1.split('\n');
+  const result = arr1.map((element) => {
+    const after = element.indexOf('+') > 0 ? element.indexOf('+') : false;
+    const before = element.indexOf('-') > 0 ? element.indexOf('-') : false;
+    const brakets = element.includes('{') ? true : element.includes('}');
+    if (!after && !before && !brakets) {
+      const newElement = `  ${element}`;
+      return newElement;
+    }
+    return element;
+  });
+  return result.join('\n');
 };
+
 
 const diff = (firstData, secondData) => {
   if (isEqual(firstData, secondData)) {
     return firstData;
   }
-  let difference = {};
+  const difference = {};
   const keys = Object.keys(firstData);
   const keys2 = Object.keys(secondData);
   const matchingKeys = keys.filter((key) => has(secondData, key));
   const addedKeys = keys2.filter((key2) => !has(firstData, key2));
   const deletedKeys = keys.filter((key) => !has(secondData, key));
-  matchingKeys.map((key) => {
+  const matching = matchingKeys.reduce((acc, key) => {
     if (isEqual(secondData[key], firstData[key])) {
-      difference[key] = firstData[key];
-    } else if (isObject(firstData, key) && isObject(secondData, key)) {
-      difference = { ...difference, [key]: diff(firstData[key], secondData[key]) };
-    } else {
-      difference[space(plus(key))] = secondData[key];
-      difference[space(minus(key))] = firstData[key];
+      acc[notDiff(key)] = firstData[key];
+      return acc;
+    } if (isObject(firstData, key) && isObject(secondData, key)) {
+      return { ...acc, [notDiff(key)]: diff(firstData[key], secondData[key]) };
     }
-    return true;
-  });
+    acc[after(key)] = secondData[key];
+    acc[before(key)] = firstData[key];
+    return acc;
+  }, {});
   addedKeys.map((key) => {
-    difference[plus(key)] = secondData[key];
+    difference[after(key)] = secondData[key];
     return true;
   });
   deletedKeys.map((key) => {
-    difference[minus(key)] = firstData[key];
+    difference[before(key)] = firstData[key];
     return true;
   });
-  const result = difference;
+  const result = { ...matching, ...difference };
   return result;
 };
 
