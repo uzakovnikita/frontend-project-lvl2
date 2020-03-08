@@ -2,6 +2,7 @@ import { cwd } from 'process';
 import { resolve, extname } from 'path';
 import { readFileSync } from 'fs';
 import { safeLoad } from 'js-yaml';
+import { parse } from 'ini';
 
 const YMLparse = (firstSource) => {
   const firstData = safeLoad(readFileSync(firstSource));
@@ -13,10 +14,12 @@ const JSONparse = (firstSource) => {
   return firstData;
 };
 
+const INIparse = (source) => parse(readFileSync(source, 'utf-8'));
 
 const parser = {
   json: JSONparse,
   yml: YMLparse,
+  ini: INIparse,
 };
 
 export default (config) => {

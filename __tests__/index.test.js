@@ -19,3 +19,10 @@ test('diffYAML', () => {
   const result = genDiff(firstConfig, secondConfig);
   expect(result).toBe(equal);
 });
+test('diffINI', () => {
+  const firstConfig = getFixturePath('before.ini');
+  const secondConfig = getFixturePath('after.yml');
+  const equal = readFile('equal');
+  const result = genDiff(firstConfig, secondConfig);
+  expect(result).toBe(equal);
+});
