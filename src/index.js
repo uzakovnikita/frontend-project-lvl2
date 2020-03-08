@@ -1,14 +1,12 @@
 import { has, isEqual } from 'lodash';
-// import { readFileSync } from 'fs';
-// import { cwd } from 'process';
-// import { resolve } from 'path';
 import parse from './parse';
 
+const space = (key, counter) => `${'  '.repeat(counter)}${key}`;
 const plus = (key) => `+ ${key}`;
 const minus = (key) => `- ${key}`;
 const isObject = (obj, key) => Object.prototype.toString.call(obj[key]) === '[object Object]';
 
-const convertObjectToSring = (obj) => {
+const render = (obj) => {
   const indentation = 2;
   const str = JSON.stringify(obj, null, indentation);
   const result = str.replace(/["',]/g, '');
@@ -28,11 +26,11 @@ const diff = (firstData, secondData) => {
   matchingKeys.map((key) => {
     if (isEqual(secondData[key], firstData[key])) {
       difference[key] = firstData[key];
-    } else if (isObject(firstData, key)) {
-      difference = { ...difference, [(key)]: diff(firstData[key], secondData[key]) };
+    } else if (isObject(firstData, key) && isObject(secondData, key)) {
+      difference = { ...difference, [key]: diff(firstData[key], secondData[key]) };
     } else {
-      difference[plus(key)] = secondData[key];
-      difference[minus(key)] = firstData[key];
+      difference[space(plus(key))] = secondData[key];
+      difference[space(minus(key))] = firstData[key];
     }
     return true;
   });
@@ -52,6 +50,7 @@ export default (firstConfig, secondConfig) => {
   const firstData = parse(firstConfig);
   const secondData = parse(secondConfig);
   const difference = diff(firstData, secondData);
-  const result = convertObjectToSring(difference);
+  const result = render(difference);
+  console.log(result);
   return result;
 };

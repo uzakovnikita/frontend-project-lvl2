@@ -25,6 +25,6 @@ const parser = {
 export default (config) => {
   const currentDirectory = cwd();
   const firstSource = resolve(currentDirectory, config);
-  const type = extname(firstSource).replace(/[.]/g, '');
+  const type = extname(firstSource).replace(/[.]/g, '').trim();
   return parser[type](firstSource);
 };

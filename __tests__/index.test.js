@@ -26,3 +26,10 @@ test('diffINI', () => {
   const result = genDiff(firstConfig, secondConfig);
   expect(result).toBe(equal);
 });
+test('diffJSONREC', () => {
+  const firstConfig = getFixturePath('beforerec.json');
+  const secondConfig = getFixturePath('afterrec.json');
+  const equal = readFile('equalrec');
+  const result = genDiff(firstConfig, secondConfig);
+  expect(result).toBe(equal);
+});

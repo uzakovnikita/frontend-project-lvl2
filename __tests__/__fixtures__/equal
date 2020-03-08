@@ -1,5 +1,5 @@
 {
-  host: hexlet.io
+    host: hexlet.io
   + timeout: 20
   - timeout: 50
   + verbose: true
