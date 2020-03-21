@@ -9,10 +9,14 @@ const render = (ast, deep = 1) => {
         return acc.concat(newAcc);
       }
       if (isObject(current.value)) {
-        const stringify = JSON.stringify(current.value).replace(/[.{}"]/g, '');
-        const doneStr = stringify.replace(/:/g, ': ');
         const newDeep = deep + 2;
-        const newString = `{\n${space.repeat(newDeep)}${space}${doneStr}\n${space}${space.repeat(deep)}}`;
+        const entries = Object.entries(current.value);
+        const newStr = entries.reduce((accum, element) => {
+          const [key, value] = element;
+          const newAcc = `${space.repeat(newDeep)}${key}: ${value}\n`;
+          return accum.concat(newAcc);
+        }, '');
+        const newString = `{\n${space}${newStr}${space}${space.repeat(deep)}}`;
         const newAcc = `${space.repeat(deep)}${current.type} ${current.key}: ${newString}\n`;
         return acc.concat(newAcc);
       }
@@ -27,4 +31,3 @@ const render = (ast, deep = 1) => {
 };
 const x = (str) => `{\n${render(str)}}`;
 export default x;
-// export default (ast) => ast;

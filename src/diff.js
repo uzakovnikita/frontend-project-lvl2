@@ -1,24 +1,5 @@
 import { has, isEqual, flatten } from 'lodash';
 
-// {type: tagsList, body: [ { type: tag, name: <>, body: <>, options: {} } ] }
-
-// const iter = (data) => {
-//   if (data[0] instanceof Array) {
-//    return {type: 'tagsList', body: data.map(iter)}
-//   }
-//   let body;
-//   let options;
-//   if (data.length === 3) {
-//     body = data[2];
-//     options = data[1];
-//   } else if (data.length === 2) {
-//     body = data[1];
-//     options = {};
-//   }
-//   const processedBody = (body instanceof Array) ? iter(body) : body;
-//   return { type: 'tag', name: data[0], body: processedBody, options}
-// };
-
 const isObject = (obj) => Object.prototype.toString.call(obj) === '[object Object]';
 
 const iter = (firstData, secondData) => {
