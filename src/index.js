@@ -1,6 +1,7 @@
 import { has, isEqual } from 'lodash';
 import parse from './parse';
 import diff from './diff';
+import render from './render';
 
 const space = (key, counter) => `${'  '.repeat(counter)}${key}`;
 // const after = (key) => `after ${key}`;
@@ -9,8 +10,8 @@ const space = (key, counter) => `${'  '.repeat(counter)}${key}`;
 const after = (key) => `+ ${key}`;
 const before = (key) => `- ${key}`;
 const notDiff = (key) => `${key}`;
-const isObject = (obj, key) => Object.prototype.toString.call(obj[key]) === '[object Object]';
-const render = (obj) => obj;
+export const isObject = (obj, key) => Object.prototype.toString.call(obj[key]) === '[object Object]';
+
 
 
 // const diff = (firstData, secondData) => {
