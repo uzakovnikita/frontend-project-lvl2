@@ -4,11 +4,11 @@ import genDiff from '..';
 
 program
   .version('-V, --version')
-  .option('-f, --format [type]', 'output format')
+  .option('-f, --format [type]', 'output format', 'recursive')
   .arguments('<firstConfig> <secondConfig>')
   .action(
-    (firstConfig, secondConfig) => {
-      const result = genDiff(firstConfig, secondConfig);
+    (firstConfig, secondConfig, format) => {
+      const result = genDiff(firstConfig, secondConfig, format);
       console.log(result);
       return result;
     },

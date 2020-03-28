@@ -1,9 +1,9 @@
-import { isObject } from 'lodash';
+import { isObject, has } from 'lodash';
 
 const render = (ast, deep = 1) => {
   const space = '  ';
   const str = ast.reduce((acc, current) => {
-    if (!Array.isArray(current.value)) {
+    if (!has(current, 'children')) {
       if (current.type === 'notDiff') {
         const newAcc = `${space.repeat(deep)}${space}${current.key}: ${current.value}\n`;
         return acc.concat(newAcc);
@@ -16,15 +16,17 @@ const render = (ast, deep = 1) => {
           const newAcc = `${space.repeat(newDeep)}${key}: ${value}\n`;
           return accum.concat(newAcc);
         }, '');
+        const type = (current.type === 'added' || current.type === 'after') ? '+' : '-';
         const newString = `{\n${space}${newStr}${space}${space.repeat(deep)}}`;
-        const newAcc = `${space.repeat(deep)}${current.type} ${current.key}: ${newString}\n`;
+        const newAcc = `${space.repeat(deep)}${type} ${current.key}: ${newString}\n`;
         return acc.concat(newAcc);
       }
-      const newAcc = `${space.repeat(deep)}${current.type} ${current.key}: ${current.value}\n`;
+      const type = (current.type === 'added' || current.type === 'after') ? '+' : '-';
+      const newAcc = `${space.repeat(deep)}${type} ${current.key}: ${current.value}\n`;
       return `${acc.concat(newAcc)}`;
     }
     const newDeep = deep + 2;
-    const newAcc = `${space.repeat(deep)}${space}${current.key}: {\n${render(current.value, newDeep)}${space.repeat(deep)}${space}}\n`;
+    const newAcc = `${space.repeat(deep)}${space}${current.key}: {\n${render(current.children, newDeep)}${space.repeat(deep)}${space}}\n`;
     return acc.concat(newAcc);
   }, '');
   return str;
