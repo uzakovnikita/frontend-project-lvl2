@@ -7,8 +7,8 @@ program
   .option('-f, --format [type]', 'output format', 'recursive')
   .arguments('<firstConfig> <secondConfig>')
   .action(
-    (firstConfig, secondConfig, format) => {
-      const result = genDiff(firstConfig, secondConfig, format);
+    (firstConfig, secondConfig) => {
+      const result = genDiff(firstConfig, secondConfig, program.format);
       console.log(result);
       return result;
     },

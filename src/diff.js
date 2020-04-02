@@ -1,5 +1,5 @@
 import {
-  has, isEqual, flatten, isObject,
+  has, isEqual, isObject,
 } from 'lodash';
 
 const iter = (firstData, secondData) => {
@@ -17,14 +17,13 @@ const iter = (firstData, secondData) => {
     if (isObject(firstData[key]) && isObject(secondData[key])) {
       return { type: 'notDiff', key, children: iter(firstData[key], secondData[key]) };
     }
-    // const changed = { type: 'changed', key, newValue: secondData[key], oldValue: firstData[key] };
-    const added = { type: 'after', key, value: secondData[key] };
-    const deleted = { type: 'before', key, value: firstData[key] };
-    return [added, deleted];
+    const changed = {
+      type: 'changed', key, newValue: secondData[key], oldValue: firstData[key],
+    };
+    return changed;
   });
-  const mathcingSingleDeep = flatten(mathcing);
-  const result = [...mathcingSingleDeep, ...add, ...del];
-  console.log(JSON.stringify(result, null, 2))
+  const result = [...mathcing, ...add, ...del];
+  // console.log(JSON.stringify(result, null, 2));
   return result;
 };
 export default iter;
