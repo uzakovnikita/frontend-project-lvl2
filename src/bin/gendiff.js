@@ -4,7 +4,7 @@ import genDiff from '..';
 
 program
   .version('-V, --version')
-  .option('-f, --format [type]', 'output format', 'recursive')
+  .option('-f, --format [type]', 'output format [recursive, plain, json]', 'recursive')
   .arguments('<firstConfig> <secondConfig>')
   .action(
     (firstConfig, secondConfig) => {
