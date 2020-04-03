@@ -14,7 +14,7 @@
       + setting5: {
             key5: value5
         }
-      - setting2: 200
+      - setting2: twenty
     }
     group1: {
       + baz: bars
@@ -26,9 +26,9 @@
         }
     }
   + group3: {
-        fee: 100500
+        fee: fifty
     }
   - group2: {
-        abc: 12345
+        abc: sixteen
     }
 }

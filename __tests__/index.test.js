@@ -52,3 +52,26 @@ test('diffYAMLPLAIN', () => {
   const result = genDiff(firstConfig, secondConfig, 'plain');
   expect(result).toBe(equal);
 });
+
+// JSON tests
+test('diffJSONJSON', () => {
+  const firstConfig = getFixturePath('before.json');
+  const secondConfig = getFixturePath('after.json');
+  const result = genDiff(firstConfig, secondConfig, 'json');
+  const equal = readFile('equaljson');
+  expect(result).toBe(equal);
+});
+test('diffINIJSON', () => {
+  const firstConfig = getFixturePath('before.ini');
+  const secondConfig = getFixturePath('after.ini');
+  const result = genDiff(firstConfig, secondConfig, 'json');
+  const equal = readFile('equaljson');
+  expect(result).toBe(equal);
+});
+test('diffYAMLJSON', () => {
+  const firstConfig = getFixturePath('before.yml');
+  const secondConfig = getFixturePath('after.yml');
+  const result = genDiff(firstConfig, secondConfig, 'json');
+  const equal = readFile('equaljson');
+  expect(result).toBe(equal);
+});

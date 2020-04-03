@@ -23,7 +23,6 @@ const iter = (firstData, secondData) => {
     return changed;
   });
   const result = [...mathcing, ...add, ...del];
-  // console.log(JSON.stringify(result, null, 2));
   return result;
 };
 export default iter;
