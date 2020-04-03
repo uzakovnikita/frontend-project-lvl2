@@ -3,7 +3,6 @@ import { has, isObject } from 'lodash';
 const complexValue = (current) => {
   if (isObject(current)) {
     return '[complex Value]';
-  // eslint-disable-next-line no-restricted-globals
   } if (isFinite(current)) {
     return current;
   }
