@@ -3,9 +3,12 @@ import { resolve, extname } from 'path';
 import { readFileSync } from 'fs';
 import { safeLoad } from 'js-yaml';
 import { parse } from 'ini';
+import render from './render';
+import plain from './plain';
+import json from './json';
 
-const JSONparse = (firstSource) => {
-  const firstData = JSON.parse(readFileSync(firstSource));
+const JSONparse = (source) => {
+  const firstData = JSON.parse(readFileSync(source));
   return firstData;
 };
 
@@ -22,9 +25,15 @@ const parserManager = {
   ini: INIparse,
 };
 
-export default (config) => {
+export const parser = (config) => {
   const currentDirectory = cwd();
-  const firstSource = resolve(currentDirectory, config);
-  const type = extname(firstSource).replace(/[.]/g, '').trim();
-  return parserManager[type](firstSource);
+  const source = resolve(currentDirectory, config);
+  const type = extname(source).replace(/[.]/g, '').trim();
+  return parserManager[type](source);
+};
+
+export const renderManager = {
+  recursive: render,
+  plain,
+  json,
 };

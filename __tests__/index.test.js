@@ -16,7 +16,7 @@ test.each([
   ['before.json', 'after.json', 'json', 'equaljson'],
   ['before.ini', 'after.ini', 'json', 'equaljson'],
   ['before.yml', 'after.yml', 'json', 'equaljson'],
-])('.add(%i, %i)', (before, after, format, expected) => {
+])('.add(%s, %s, %s, %s)', (before, after, format, expected) => {
   const firstConfig = getFixturePath(before);
   const secondConfig = getFixturePath(after);
   const equal = readFile(expected);
