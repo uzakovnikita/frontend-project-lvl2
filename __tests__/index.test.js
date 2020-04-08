@@ -5,73 +5,21 @@ import genDiff from '../src';
 const getFixturePath = (filename) => join(__dirname, '.', '__fixtures__', filename);
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
 
-// render tests
 
-test('diffJSON', () => {
-  const firstConfig = getFixturePath('before.json');
-  const secondConfig = getFixturePath('after.json');
-  const equal = readFile('equal');
-  const result = genDiff(firstConfig, secondConfig, 'recursive');
-  expect(result).toBe(equal);
-});
-test('diffINI', () => {
-  const firstConfig = getFixturePath('before.ini');
-  const secondConfig = getFixturePath('after.ini');
-  const equal = readFile('equal');
-  const result = genDiff(firstConfig, secondConfig, 'recursive');
-  expect(result).toBe(equal);
-});
-test('diffYAML', () => {
-  const firstConfig = getFixturePath('before.yml');
-  const secondConfig = getFixturePath('after.yml');
-  const equal = readFile('equal');
-  const result = genDiff(firstConfig, secondConfig, 'recursive');
-  expect(result).toBe(equal);
-});
-
-// plain tests
-
-test('diffJSONPLAIN', () => {
-  const firstConfig = getFixturePath('before.json');
-  const secondConfig = getFixturePath('after.json');
-  const equal = readFile('equalplain');
-  const result = genDiff(firstConfig, secondConfig, 'plain');
-  expect(result).toBe(equal);
-});
-test('diffINIPLAIN', () => {
-  const firstConfig = getFixturePath('before.ini');
-  const secondConfig = getFixturePath('after.ini');
-  const equal = readFile('equalplain');
-  const result = genDiff(firstConfig, secondConfig, 'plain');
-  expect(result).toBe(equal);
-});
-test('diffYAMLPLAIN', () => {
-  const firstConfig = getFixturePath('before.yml');
-  const secondConfig = getFixturePath('after.yml');
-  const equal = readFile('equalplain');
-  const result = genDiff(firstConfig, secondConfig, 'plain');
-  expect(result).toBe(equal);
-});
-
-// JSON tests
-test('diffJSONJSON', () => {
-  const firstConfig = getFixturePath('before.json');
-  const secondConfig = getFixturePath('after.json');
-  const result = genDiff(firstConfig, secondConfig, 'json');
-  const equal = readFile('equaljson');
-  expect(result).toBe(equal);
-});
-test('diffINIJSON', () => {
-  const firstConfig = getFixturePath('before.ini');
-  const secondConfig = getFixturePath('after.ini');
-  const result = genDiff(firstConfig, secondConfig, 'json');
-  const equal = readFile('equaljson');
-  expect(result).toBe(equal);
-});
-test('diffYAMLJSON', () => {
-  const firstConfig = getFixturePath('before.yml');
-  const secondConfig = getFixturePath('after.yml');
-  const result = genDiff(firstConfig, secondConfig, 'json');
-  const equal = readFile('equaljson');
+test.each([
+  ['before.json', 'after.json', 'recursive', 'equal'],
+  ['before.ini', 'after.ini', 'recursive', 'equal'],
+  ['before.yml', 'after.yml', 'recursive', 'equal'],
+  ['before.json', 'after.json', 'plain', 'equalplain'],
+  ['before.ini', 'after.ini', 'plain', 'equalplain'],
+  ['before.yml', 'after.yml', 'plain', 'equalplain'],
+  ['before.json', 'after.json', 'json', 'equaljson'],
+  ['before.ini', 'after.ini', 'json', 'equaljson'],
+  ['before.yml', 'after.yml', 'json', 'equaljson'],
+])('.add(%i, %i)', (before, after, format, expected) => {
+  const firstConfig = getFixturePath(before);
+  const secondConfig = getFixturePath(after);
+  const equal = readFile(expected);
+  const result = genDiff(firstConfig, secondConfig, format);
   expect(result).toBe(equal);
 });
