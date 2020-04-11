@@ -1,10 +1,11 @@
-import { renderManager, parser } from './formatters';
+import toParse from './parser';
 import diff from './diff';
+import toFormat from './formatters';
 
 export default (firstConfig, secondConfig, format) => {
-  const firstData = parser(firstConfig);
-  const secondData = parser(secondConfig);
+  const firstData = toParse(firstConfig);
+  const secondData = toParse(secondConfig);
   const difference = diff(firstData, secondData);
-  const result = renderManager[format](difference);
+  const result = toFormat(format, difference);
   return result;
 };

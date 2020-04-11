@@ -2,7 +2,7 @@ import {
   has, isEqual, isObject,
 } from 'lodash';
 
-const iter = (firstData, secondData) => {
+const diff = (firstData, secondData) => {
   const keys = Object.keys(firstData);
   const deletedKeys = keys.filter((key) => !has(secondData, key));
   const del = deletedKeys.map((key) => ({ type: 'deleted', key, value: firstData[key] }));
@@ -15,7 +15,7 @@ const iter = (firstData, secondData) => {
       return { type: 'notDiff', key, value: firstData[key] };
     }
     if (isObject(firstData[key]) && isObject(secondData[key])) {
-      return { type: 'notDiff', key, children: iter(firstData[key], secondData[key]) };
+      return { type: 'notDiff', key, children: diff(firstData[key], secondData[key]) };
     }
     const changed = {
       type: 'changed', key, newValue: secondData[key], oldValue: firstData[key],
@@ -25,4 +25,4 @@ const iter = (firstData, secondData) => {
   const result = [...mathcing, ...add, ...del];
   return result;
 };
-export default iter;
+export default diff;
