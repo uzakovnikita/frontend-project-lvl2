@@ -1,6 +1,7 @@
 {
     common: {
         setting1: Value 1
+      - setting2: twenty
       + setting3: {
             key: value
         }
@@ -14,7 +15,6 @@
       + setting5: {
             key5: value5
         }
-      - setting2: twenty
     }
     group1: {
       + baz: bars
@@ -25,10 +25,10 @@
             key: value
         }
     }
-  + group3: {
-        fee: fifty
-    }
   - group2: {
         abc: sixteen
+    }
+  + group3: {
+        fee: fifty
     }
 }

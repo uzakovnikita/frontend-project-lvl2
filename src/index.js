@@ -7,5 +7,6 @@ export default (firstConfig, secondConfig, format) => {
   const secondData = toParse(secondConfig);
   const difference = diff(firstData, secondData);
   const result = toFormat(format, difference);
+  console.log(result);
   return result;
 };
