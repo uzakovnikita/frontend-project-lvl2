@@ -4,17 +4,17 @@ import { readFileSync } from 'fs';
 import { safeLoad } from 'js-yaml';
 import { parse } from 'ini';
 
-const parseFromJson = (source) => {
-  const firstData = JSON.parse(readFileSync(source));
+const parseFromJson = (path) => {
+  const firstData = JSON.parse(readFileSync(path));
   return firstData;
 };
 
-const parseFromYml = (firstSource) => {
-  const firstData = safeLoad(readFileSync(firstSource));
+const parseFromYml = (path) => {
+  const firstData = safeLoad(readFileSync(path));
   return firstData;
 };
 
-const parseFromIni = (source) => parse(readFileSync(source, 'utf-8'));
+const parseFromIni = (path) => parse(readFileSync(path, 'utf-8'));
 
 const parserManager = {
   json: parseFromJson,
