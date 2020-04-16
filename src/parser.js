@@ -4,11 +4,11 @@ import { readFileSync } from 'fs';
 import { safeLoad } from 'js-yaml';
 import { parse } from 'ini';
 
-const parseFromJson = (path) => JSON.parse(readFileSync(path));
+const parseFromJson = (filePath) => JSON.parse(readFileSync(filePath));
 
-const parseFromYml = (path) => safeLoad(readFileSync(path));
+const parseFromYml = (filePath) => safeLoad(readFileSync(filePath));
 
-const parseFromIni = (path) => parse(readFileSync(path, 'utf-8'));
+const parseFromIni = (filePath) => parse(readFileSync(filePath, 'utf-8'));
 
 const parserManager = {
   json: parseFromJson,
@@ -16,9 +16,9 @@ const parserManager = {
   ini: parseFromIni,
 };
 
-export default (path) => {
+export default (filePath) => {
   const currentDirectory = cwd();
-  const absolutePath = resolve(currentDirectory, path);
+  const absolutePath = resolve(currentDirectory, filePath);
   const type = extname(source).replace(/[.]/g, '').trim();
   if (!({}).hasOwnProperty.call(parserManager, type)) {
     throw new Error(`Uknown type ${type}`);
