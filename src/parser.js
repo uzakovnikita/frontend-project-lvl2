@@ -19,7 +19,7 @@ const parserManager = {
 export default (filePath) => {
   const currentDirectory = cwd();
   const absolutePath = resolve(currentDirectory, filePath);
-  const type = extname(source).replace(/[.]/g, '').trim();
+  const type = extname(absolutePath).replace(/[.]/g, '').trim();
   if (!({}).hasOwnProperty.call(parserManager, type)) {
     throw new Error(`Uknown type ${type}`);
   }
