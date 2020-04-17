@@ -2,10 +2,10 @@ import parse from './parser';
 import diff from './diff';
 import format from './formatters';
 
-export default (firstPath, secondPath, format) => {
+export default (firstPath, secondPath, form) => {
   const firstData = parse(firstPath);
   const secondData = parse(secondPath);
   const difference = diff(firstData, secondData);
-  const result = format(format, difference);
+  const result = format(form, difference);
   return result;
 };
