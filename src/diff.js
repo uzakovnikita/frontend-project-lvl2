@@ -2,19 +2,9 @@ import {
   has, isEqual, isObject, uniq,
 } from 'lodash';
 
-const isDeleted = (secondArr, firstKey) => {
-  if (!has(secondArr, firstKey)) {
-    return true;
-  }
-  return false;
-};
+const isDeleted = (secondData, key) => !has(secondData, key);
 
-const isAdded = (firstArr, secondKey) => {
-  if (!has(firstArr, secondKey)) {
-    return true;
-  }
-  return false;
-};
+const isAdded = (firstData, key) => !has(firstData, key);
 
 const diff = (firstData, secondData) => {
   const firstKeys = Object.keys(firstData);
