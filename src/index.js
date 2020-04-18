@@ -5,14 +5,17 @@ import parse from './parser';
 import diff from './diff';
 import format from './formatters';
 
-export default (firstPath, secondPath, form) => {
+const readFileAndType = (filePath) => {
   const currentDirectory = cwd();
-  const firstAbsolutePath = resolve(currentDirectory, firstPath);
-  const secondAbsolutePath = resolve(currentDirectory, secondPath);
-  const firstType = extname(firstAbsolutePath).replace(/[.]/g, '').trim();
-  const secondType = extname(secondAbsolutePath).replace(/[.]/g, '').trim();
-  const firstDataBeforeParsing = readFileSync(firstAbsolutePath, 'utf-8');
-  const secondDataBeforeParsing = readFileSync(secondAbsolutePath, 'utf-8');
+  const absolutePathe = resolve(currentDirectory, filePath);
+  const type = extname(absolutePathe).replace(/[.]/g, '').trim();
+  const data = readFileSync(absolutePathe, 'utf-8');
+  return { data, type };
+};
+
+export default (firstPath, secondPath, form) => {
+  const { data: firstDataBeforeParsing, type: firstType } = readFileAndType(firstPath);
+  const { data: secondDataBeforeParsing, type: secondType } = readFileAndType(secondPath);
   const firstData = parse(firstDataBeforeParsing, firstType);
   const secondData = parse(secondDataBeforeParsing, secondType);
   const difference = diff(firstData, secondData);
