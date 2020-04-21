@@ -10,7 +10,7 @@ const renderManager = {
 };
 
 export default (format, differnce) => {
-  if (!({}).hasOwnProperty.call(renderManager, format)) {
+  if (!Reflect.has(renderManager, format)) {
     throw new Error(`Uknown format ${format}`);
   }
   return renderManager[format](differnce);
