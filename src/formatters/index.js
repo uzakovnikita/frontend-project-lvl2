@@ -1,12 +1,11 @@
 import render from './render';
 import plain from './plain';
-import json from './json';
 
 
 const renderManager = {
   recursive: render,
   plain,
-  json,
+  json: JSON.stringify,
 };
 
 export default (format, differnce) => {
