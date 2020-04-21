@@ -13,7 +13,7 @@ const parserManager = {
 };
 
 export default (data, type) => {
-  if (!Reflect.has(parserManager, type) {
+  if (!Reflect.has(parserManager, type)) {
     throw new Error(`Uknown type ${type}`);
   }
   return parserManager[type](data);
