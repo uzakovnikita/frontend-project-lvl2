@@ -21,7 +21,7 @@ const diff = (firstData, secondData) => {
       return { type: 'notDiff', key, value: firstData[key] };
     }
     if (isObject(firstData[key]) && isObject(secondData[key])) {
-      return { type: 'notDiff', key, children: diff(firstData[key], secondData[key]) };
+      return { type: 'parent', key, children: diff(firstData[key], secondData[key]) };
     }
     return {
       type: 'changed', key, newValue: secondData[key], oldValue: firstData[key],
