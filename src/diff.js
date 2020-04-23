@@ -1,5 +1,5 @@
 import {
-  has, isEqual, isObject, uniq,
+  has, isEqual, isObject, union,
 } from 'lodash';
 
 const isDeleted = (secondData, key) => !has(secondData, key);
@@ -9,7 +9,7 @@ const isAdded = (firstData, key) => !has(firstData, key);
 const diff = (firstData, secondData) => {
   const firstKeys = Object.keys(firstData);
   const secondKeys = Object.keys(secondData);
-  const keys = uniq(firstKeys.concat(secondKeys));
+  const keys = union(firstKeys, secondKeys);
   const result = keys.map((key) => {
     if (isDeleted(secondData, key)) {
       return { type: 'deleted', key, value: firstData[key] };
