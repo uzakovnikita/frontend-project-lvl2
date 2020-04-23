@@ -1,9 +1,8 @@
-import { has, isObject } from 'lodash';
+import { isObject } from 'lodash';
 
-const complexValue = (current) => {
+const renderValue = (current) => {
   if (isObject(current)) {
     return '[complex Value]';
-  // eslint-disable-next-line no-restricted-globals
   } if (isFinite(current)) {
     return current;
   }
@@ -11,29 +10,31 @@ const complexValue = (current) => {
 };
 
 const plain = (ast) => {
-  const iter = (tree, accumulator) => {
-    const str = tree.reduce((acc, current) => {
-      if (has(current, 'children')) {
-        const newAcc = (accumulator === '') ? `${current.key}` : `${accumulator}.${current.key}`;
-        const x = iter(current.children, newAcc);
-        return acc.concat(x);
-      }
-      const variable = (accumulator === '') ? `${current.key}` : `${accumulator}.${current.key}`;
+  const iter = (tree, acc) => {
+    const result = tree.map((current) => {
+      const deepNameOfProperty = (acc === '') ? `${current.key}` : `${acc}.${current.key}`;
       switch (current.type) {
+        case 'parent': {
+          const child = iter(current.children, deepNameOfProperty)
+            .filter((element) => !!element)
+            .join('\n');
+          return child;
+        }
         case 'deleted':
-          return acc.concat(`Property '${variable}' was deleted\n`);
+          return `Property '${deepNameOfProperty}' was deleted`;
         case 'added':
-          return acc.concat(`Property '${variable}' was added with value: ${complexValue(current.value)}\n`);
+          return `Property '${deepNameOfProperty}' was added with value: ${renderValue(current.value)}`;
         case 'changed':
-          return acc.concat(`Property '${variable}' was changed from ${complexValue(current.oldValue)} to ${complexValue(current.newValue)}\n`);
-        default:
+          return `Property '${deepNameOfProperty}' was changed from ${renderValue(current.oldValue)} to ${renderValue(current.newValue)}`;
+        case 'notDiff':
           break;
+        default:
+          throw new Error('Uknown type of node');
       }
-      return acc;
-    }, '');
-    return str;
+      return false;
+    });
+    return result;
   };
-  return iter(ast, '');
+  return `${iter(ast, '').filter((element) => !!element).join('\n')}\n`;
 };
-
 export default plain;

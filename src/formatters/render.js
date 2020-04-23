@@ -65,7 +65,7 @@ const render = (tree) => {
         const newAcc = `${space.repeat(deep)}${symbol}${current.key}: {\n${children}${space.repeat(deep)}${space}}\n`;
         return newAcc;
       }
-      return false;
+      throw new Error('Uknown type of node');
     });
     return result;
   };
