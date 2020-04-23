@@ -1,6 +1,6 @@
 import { isObject } from 'lodash';
 
-const renderObject = (value, deep) => {
+const renderValue = (value, deep) => {
   const space = '  ';
   const symbol = space;
   if (!isObject(value)) {
@@ -21,51 +21,44 @@ const render = (tree) => {
   const space = '  ';
   const iter = (ast, deep) => {
     const result = ast.map((current) => {
-      if (current.type === 'notDiff') {
-        const symbol = space;
-        const newAcc = `${space.repeat(deep)}${symbol}${current.key}: ${current.value}\n`;
-        return newAcc;
+      switch (current.type) {
+        case 'notDiff': {
+          const symbol = space;
+          const newString = `${space.repeat(deep)}${symbol}${current.key}: ${current.value}\n`;
+          return newString;
+        }
+        case 'changed': {
+          const newValue = renderValue(current.newValue, deep);
+          const oldValue = renderValue(current.oldValue, deep);
+          const firstSymbol = '+ ';
+          const secondSymbol = '- ';
+          const firstString = `${space.repeat(deep)}${firstSymbol}${current.key}: ${newValue}\n`;
+          const secondString = `${space.repeat(deep)}${secondSymbol}${current.key}: ${oldValue}\n`;
+          const newString = firstString.concat(secondString);
+          return newString;
+        }
+        case 'added': {
+          const symbol = '+ ';
+          const newValue = renderValue(current.value, deep);
+          const newString = `${space.repeat(deep)}${symbol}${current.key}: ${newValue}\n`;
+          return newString;
+        }
+        case 'deleted': {
+          const symbol = '- ';
+          const newValue = renderValue(current.value, deep);
+          const newString = `${space.repeat(deep)}${symbol}${current.key}: ${newValue}\n`;
+          return newString;
+        }
+        case 'parent': {
+          const symbol = space;
+          const newDeep = deep + 2;
+          const children = iter(current.children, newDeep).join('');
+          const newString = `${space.repeat(deep)}${symbol}${current.key}: {\n${children}${space.repeat(deep)}${space}}\n`;
+          return newString;
+        }
+        default:
+          throw new Error('Uknown type of node');
       }
-      if (current.type === 'changed') {
-        const newValue = renderObject(current.newValue, deep);
-        const oldValue = renderObject(current.oldValue, deep);
-        const firstSymbol = '+ ';
-        const secondSymbol = '- ';
-        const firstString = `${space.repeat(deep)}${firstSymbol}${current.key}: ${newValue}\n`;
-        const secondString = `${space.repeat(deep)}${secondSymbol}${current.key}: ${oldValue}\n`;
-        const newAcc = firstString.concat(secondString);
-        return newAcc;
-      }
-      if (current.type === 'added' && isObject(current.value)) {
-        const symbol = '+ ';
-        const newString = renderObject(current.value, deep);
-        const newAcc = `${space.repeat(deep)}${symbol}${current.key}: ${newString}\n`;
-        return newAcc;
-      }
-      if (current.type === 'deleted' && isObject(current.value)) {
-        const symbol = '- ';
-        const newString = renderObject(current.value, deep);
-        const newAcc = `${space.repeat(deep)}${symbol}${current.key}: ${newString}\n`;
-        return newAcc;
-      }
-      if (current.type === 'added' && !isObject(current.value)) {
-        const symbol = '+ ';
-        const newAcc = `${space.repeat(deep)}${symbol}${current.key}: ${current.value}\n`;
-        return newAcc;
-      }
-      if (current.type === 'deleted' && !isObject(current.value)) {
-        const symbol = '- ';
-        const newAcc = `${space.repeat(deep)}${symbol}${current.key}: ${current.value}\n`;
-        return newAcc;
-      }
-      if (current.type === 'parent') {
-        const symbol = space;
-        const newDeep = deep + 2;
-        const children = iter(current.children, newDeep).join('');
-        const newAcc = `${space.repeat(deep)}${symbol}${current.key}: {\n${children}${space.repeat(deep)}${space}}\n`;
-        return newAcc;
-      }
-      throw new Error('Uknown type of node');
     });
     return result;
   };
