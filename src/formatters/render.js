@@ -1,6 +1,6 @@
 import { isObject } from 'lodash';
 
-const renderValue = (value, deep) => {
+const renderValue = (value, depth) => {
   if (!isObject(value)) {
     return value;
   }
@@ -13,13 +13,13 @@ const renderValue = (value, deep) => {
     const result = `${space.repeat(newDeep)}${symbol}${key}: ${val}`;
     return result;
   }).join('\n');
-  const result = `{\n${newStr}\n${space}${space.repeat(deep)}}`;
+  const result = `{\n${newStr}\n${space}${space.repeat(depth)}}`;
   return result;
 };
 
 const render = (tree) => {
   const space = '  ';
-  const iter = (ast, deep) => {
+  const iter = (ast, depth) => {
     const result = ast.map((current) => {
       switch (current.type) {
         case 'notDiff': {
@@ -28,36 +28,36 @@ const render = (tree) => {
           return newString;
         }
         case 'changed': {
-          const newValue = renderValue(current.newValue, deep);
-          const oldValue = renderValue(current.oldValue, deep);
+          const newValue = renderValue(current.newValue, depth);
+          const oldValue = renderValue(current.oldValue, depth);
           const firstSymbol = '+ ';
           const secondSymbol = '- ';
-          const firstString = `${space.repeat(deep)}${firstSymbol}${current.key}: ${newValue}\n`;
-          const secondString = `${space.repeat(deep)}${secondSymbol}${current.key}: ${oldValue}`;
+          const firstString = `${space.repeat(depth)}${firstSymbol}${current.key}: ${newValue}\n`;
+          const secondString = `${space.repeat(depth)}${secondSymbol}${current.key}: ${oldValue}`;
           const newString = firstString.concat(secondString);
           return newString;
         }
         case 'added': {
           const symbol = '+ ';
-          const newValue = renderValue(current.value, deep);
-          const newString = `${space.repeat(deep)}${symbol}${current.key}: ${newValue}`;
+          const newValue = renderValue(current.value, depth);
+          const newString = `${space.repeat(depth)}${symbol}${current.key}: ${newValue}`;
           return newString;
         }
         case 'deleted': {
           const symbol = '- ';
-          const newValue = renderValue(current.value, deep);
-          const newString = `${space.repeat(deep)}${symbol}${current.key}: ${newValue}`;
+          const newValue = renderValue(current.value, depth);
+          const newString = `${space.repeat(depth)}${symbol}${current.key}: ${newValue}`;
           return newString;
         }
         case 'parent': {
           const symbol = space;
-          const newDeep = deep + 2;
+          const newDeep = depth + 2;
           const children = iter(current.children, newDeep).join('\n');
-          const newString = `${space.repeat(deep)}${symbol}${current.key}: {\n${children}\n${space.repeat(deep)}${space}}`;
+          const newString = `${space.repeat(depth)}${symbol}${current.key}: {\n${children}\n${space.repeat(depth)}${space}}`;
           return newString;
         }
         default:
-          throw new Error('Uknown type of node');
+          throw new Error('Uknown type of node ${current.type}');
       }
     });
     return result;
