@@ -1,4 +1,4 @@
-import { isObject } from 'lodash';
+import { isObject, flattenDeep } from 'lodash';
 
 const renderValue = (current) => {
   if (isObject(current)) {
@@ -15,9 +15,7 @@ const plain = (ast) => {
       const deepNameOfProperty = (acc === '') ? `${current.key}` : `${acc}.${current.key}`;
       switch (current.type) {
         case 'parent': {
-          const child = iter(current.children, deepNameOfProperty)
-            .filter((element) => !!element)
-            .join('\n');
+          const child = iter(current.children, deepNameOfProperty);
           return child;
         }
         case 'deleted':
@@ -29,12 +27,12 @@ const plain = (ast) => {
         case 'notDiff':
           break;
         default:
-          throw new Error('Uknown type of node');
+          throw new Error(`Uknown type of node ${current.type}`);
       }
       return false;
     });
     return result;
   };
-  return `${iter(ast, '').filter((element) => !!element).join('\n')}\n`;
+  return flattenDeep(iter(ast, '')).filter((element) => !!element).join('\n');
 };
 export default plain;

@@ -6,7 +6,7 @@ const renderValue = (value, depth) => {
   }
   const space = '  ';
   const symbol = space;
-  const newDeep = deep + 2;
+  const newDeep = depth + 2;
   const entries = Object.entries(value);
   const newStr = entries.map((current) => {
     const [key, val] = current;
@@ -24,7 +24,7 @@ export default (tree) => {
       switch (current.type) {
         case 'notDiff': {
           const symbol = space;
-          const newString = `${space.repeat(deep)}${symbol}${current.key}: ${current.value}`;
+          const newString = `${space.repeat(depth)}${symbol}${current.key}: ${current.value}`;
           return newString;
         }
         case 'changed': {
@@ -57,7 +57,7 @@ export default (tree) => {
           return newString;
         }
         default:
-          throw new Error('Uknown type of node ${current.type}');
+          throw new Error(`Uknown type of node ${current.type}`);
       }
     });
     return result;
@@ -65,4 +65,3 @@ export default (tree) => {
   const result = iter(tree, 1).join('\n');
   return `{\n${result}\n}`;
 };
-
