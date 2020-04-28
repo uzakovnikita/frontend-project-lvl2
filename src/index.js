@@ -8,7 +8,7 @@ import format from './formatters';
 const readFileAndType = (filePath) => {
   const currentDirectory = cwd();
   const absolutePathe = resolve(currentDirectory, filePath);
-  const type = extname(absolutePathe).replace(/[.]/g, '').trim();
+  const type = extname(absolutePathe).slice(1);
   const data = readFileSync(absolutePathe, 'utf-8');
   return { data, type };
 };
