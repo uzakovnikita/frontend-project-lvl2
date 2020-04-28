@@ -2,14 +2,14 @@ import { safeLoad } from 'js-yaml';
 import { parse } from 'ini';
 
 
-const parseFromYml = (data) => safeLoad(data);
+
 
 const parseFromIni = (data) => parse(data);
 
 const parserManager = {
   json: JSON.parse,
-  yml: parseFromYml,
-  ini: parseFromIni,
+  yml: safeLoad,
+  ini: parse,
 };
 
 export default (data, type) => {
