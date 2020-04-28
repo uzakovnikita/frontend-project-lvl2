@@ -1,4 +1,4 @@
-import recursive from './render';
+import recursive from './recursive';
 import plain from './plain';
 
 
