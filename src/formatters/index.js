@@ -1,9 +1,9 @@
-import render from './render';
+import recursive from './render';
 import plain from './plain';
 
 
 const renderManager = {
-  recursive: render,
+  recursive,
   plain,
   json: JSON.stringify,
 };
