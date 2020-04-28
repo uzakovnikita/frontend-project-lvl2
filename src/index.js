@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { cwd } from 'process';
 import { resolve, extname } from 'path';
 import parse from './parser';
-import diff from './diff';
+import buildDiff from './diff';
 import format from './formatters';
 
 const readFileAndType = (filePath) => {
@@ -18,7 +18,7 @@ export default (firstPath, secondPath, form) => {
   const { data: secondDataBeforeParsing, type: secondType } = readFileAndType(secondPath);
   const firstData = parse(firstDataBeforeParsing, firstType);
   const secondData = parse(secondDataBeforeParsing, secondType);
-  const difference = diff(firstData, secondData);
+  const difference = buildDiff(firstData, secondData);
   const result = format(form, difference);
   return result;
 };
