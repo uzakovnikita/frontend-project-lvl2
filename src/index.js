@@ -13,12 +13,12 @@ const readFileAndType = (filePath) => {
   return { data, type };
 };
 
-export default (firstPath, secondPath, form) => {
+export default (firstPath, secondPath, format) => {
   const { data: firstDataBeforeParsing, type: firstType } = readFileAndType(firstPath);
   const { data: secondDataBeforeParsing, type: secondType } = readFileAndType(secondPath);
   const firstData = parse(firstDataBeforeParsing, firstType);
   const secondData = parse(secondDataBeforeParsing, secondType);
   const difference = buildDiff(firstData, secondData);
-  const result = format(form, difference);
+  const result = format(format, difference);
   return result;
 };
