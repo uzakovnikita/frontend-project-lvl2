@@ -17,7 +17,7 @@ const renderValue = (value, depth) => {
   return result;
 };
 
-const render = (tree) => {
+export default (tree) => {
   const space = '  ';
   const iter = (ast, depth) => {
     const result = ast.map((current) => {
@@ -66,4 +66,3 @@ const render = (tree) => {
   return `{\n${result}\n}`;
 };
 
-export default render;
